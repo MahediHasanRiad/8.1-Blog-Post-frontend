@@ -1,6 +1,6 @@
 import InputField from "@/Shared/Components/input";
 import React from "react";
-import Card from "../Components/card";
+import ArticleCard from "../../../Shared/Components/article-card";
 
 function Articles() {
   return (
@@ -11,7 +11,8 @@ function Articles() {
           placeholder={"start a post .."}
           className={"rounded-3xl w-1/2"}
         />
-        <Card
+        <ArticleCard
+          path={'articles/single'}
           authorImage={"/public/IMG_20250604_200245.jpg"}
           authorName={"Mahedi Hasan Riad"}
           title={"My 1st Blog"}

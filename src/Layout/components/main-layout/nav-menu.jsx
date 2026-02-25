@@ -10,11 +10,11 @@ import {
 
 function LeftSideMenu() {
   const menuLinks = [
-    { icon: House, text: "Home" },
-    { icon: Library, text: "Library" },
-    { icon: Users, text: "Profile" },
-    { icon: BookText, text: "Stories" },
-    { icon: ChartNoAxesColumnIncreasing, text: "Stats" },
+    { path: '', icon: House, text: "Home" },
+    { path: 'library', icon: Library, text: "Library" },
+    { path: 'profile', icon: Users, text: "Profile" },
+    { path: 'stories', icon: BookText, text: "Stories" },
+    { path: 'stats', icon: ChartNoAxesColumnIncreasing, text: "Stats" },
   ];
 
   return (
@@ -22,7 +22,7 @@ function LeftSideMenu() {
       <section className="flex flex-col w-64 h-screen sticky top-0 border-r border-gray-100 px-4 py-8">
         <div className="space-y-2">
           {menuLinks.map((link) => (
-            <MenuItem key={link.text} Icon={link.icon} text={link.text} />
+            <MenuItem key={link.text} path={link.path} Icon={link.icon} text={link.text} />
           ))}
         </div>
       </section>
