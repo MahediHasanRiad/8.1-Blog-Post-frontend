@@ -1,10 +1,11 @@
 import InputField from "@/Shared/Components/input";
 import React from "react";
 import ArticleCard from "../../../Shared/Components/article-card";
+import MainLayout from "@/Layout/Main-Layout";
 
 function Articles() {
   return (
-    <section className="">
+    <MainLayout className="">
       {/* articles  */}
       <section className="">
         <InputField
@@ -22,7 +23,7 @@ function Articles() {
           articleImage={"/public/cover-image.jpg"}
         />
       </section>
-    </section>
+    </MainLayout>
   );
 }
 

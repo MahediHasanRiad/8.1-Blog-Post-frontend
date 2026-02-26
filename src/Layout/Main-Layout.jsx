@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import HeaderSection from "./components/main-layout/header";
-import LeftSideMenu from "./components/main-layout/nav-menu";
-import FooterSection from "./components/main-layout/footer";
+import HeaderSection from "./components/header";
+import LeftSideMenu from "./components/menu";
+import FooterSection from "./components/footer";
+import {
+  House,
+  LayoutDashboard,
+  Users,
+  BookText,
+  ChartNoAxesColumnIncreasing,
+} from "lucide-react";
 
 function MainLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -10,8 +17,17 @@ function MainLayout({ children }) {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  // all menu items
+  const menuLinks = [
+    { path: '', Icon: House, text: "Home" },
+    { path: 'dashboard', Icon: LayoutDashboard, text: "Dashboard" },
+    { path: 'profile', Icon: Users, text: "Profile" },
+    { path: 'stories',Icon: BookText, text: "Stories" },
+    { path: 'stats', Icon: ChartNoAxesColumnIncreasing, text: "Stats" },
+  ];
+
   return (
-    <section className="min-h-screen bg-gray-50">
+    <section className="w-5/6 min-h-screen mx-auto bg-gray-50">
       {/* HEADER: Pass the toggle function */}
       <HeaderSection
         handleMenuButton={handleMenuButton}
@@ -21,8 +37,9 @@ function MainLayout({ children }) {
       <section className="grid grid-cols-5 mx-auto">
         {/* left side --> menu */}
         <section className="hidden md:block col-span-1 border-r border-gray-100">
-          <LeftSideMenu />
+          <LeftSideMenu menuLinks={menuLinks} />
         </section>
+        
         {/* content site {mid} */}
         <main className="col-span-3 min-h-screen flex-1 w-full px-4 md:px-8 py-6 transition-all duration-300">
           {children}

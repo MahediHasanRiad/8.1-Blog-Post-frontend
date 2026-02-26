@@ -1,8 +1,9 @@
+import MainLayout from "@/Layout/Main-Layout";
 import React from "react";
 
 function SingleArticle() {
   return (
-    <section className="p-6 space-y-4">
+    <MainLayout className="p-6 space-y-4">
       {/* article title  */}
       <div>
         <h1 className="text-4xl font-semibold">
@@ -39,7 +40,7 @@ function SingleArticle() {
         aspernatur ex autem iste, natus excepturi commodi laboriosam itaque
         inventore nam magnam cum accusantium non tempore.
       </span>
-    </section>
+    </MainLayout>
   );
 }
 

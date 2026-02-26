@@ -3,13 +3,14 @@ import ProfileImages from "../Components/Profile/profile-images";
 import Menu from "../Components/Profile/menu";
 import ArticleCard from "@/Shared/Components/article-card";
 import Info from "../Components/Profile/info";
+import MainLayout from "@/Layout/Main-Layout";
 
 function Profile() {
   const [article, setArticle] = useState(true);
   const [about, setAbout] = useState(false);
 
   return (
-    <section>
+    <MainLayout>
       <ProfileImages />
       <Menu
         article={article}
@@ -31,7 +32,7 @@ function Profile() {
 
       {/* show about section  */}
       {about && <Info />}
-    </section>
+    </MainLayout>
   );
 }
 

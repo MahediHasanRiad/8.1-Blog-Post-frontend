@@ -1,18 +1,19 @@
 import Articles from "@/Feature/Article/Pages/article.page";
 import SingleArticle from "@/Feature/Article/Pages/single-article.page";
+import EditProfile from "@/Feature/Dashboard/pages/edit-profile";
 import Profile from "@/Feature/User/Pages/profile";
-import MainLayout from "@/Layout/Main-Layout";
-import {Routes, Route} from 'react-router'
+import { Routes, Route } from "react-router";
 
 function App() {
   return (
-    <MainLayout>
+    <>
       <Routes>
         <Route path="/" element={<Articles />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/articles/single" element={<SingleArticle />} />
+        <Route path="/dashboard" element={<EditProfile />} />
       </Routes>
-    </MainLayout>
+    </>
   );
 }
 

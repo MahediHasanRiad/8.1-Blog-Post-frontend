@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import ProfileDropdownMenu from "./ProfileDropdownMenu";
 import { Menu, X } from "lucide-react";
 
@@ -14,7 +15,7 @@ function HeaderSection({ handleMenuButton, isSidebarOpen }) {
         {/* logo  */}
         <section className="flex items-center gap-3">
           <div className="flex items-center justify-center w-12 h-12">
-            <span className="font-semibold text-md">RIAD</span>
+            <Link to={'/'} className="font-semibold text-md">RIAD</Link>
           </div>
         </section>
       </section>
