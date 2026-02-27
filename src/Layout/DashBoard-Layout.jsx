@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import HeaderSection from "./components/header";
 import LeftSideMenu from "./components/menu";
 import { UserPen, Lock, Newspaper } from "lucide-react";
+import FooterSection from "./components/footer";
 
 function DashBoardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -12,9 +13,9 @@ function DashBoardLayout({ children }) {
 
   // all menu items
   const menuLinks = [
-    { path: "editProfile", Icon: UserPen, text: "Edit Profile" },
+    { path: "dashboard", Icon: UserPen, text: "Edit Profile" },
     { path: "changePassword", Icon: Lock, text: "Change Password" },
-    { path: "editArticle", Icon: Newspaper, text: "Add Article" },
+    { path: "newArticle", Icon: Newspaper, text: "Add Article" },
   ];
 
   return (
@@ -23,11 +24,11 @@ function DashBoardLayout({ children }) {
         handleMenuButton={handleMenuButton}
         isSidebarOpen={isSidebarOpen}
       />
-      <section className="grid grid-cols-6">
-        <section className="col-span-2 hidden md:block">
+      <section className="grid grid-cols-4">
+        <section className="col-span-1 hidden md:block">
           <LeftSideMenu menuLinks={menuLinks} />
         </section>
-        <section className="col-span-4">{children}</section>
+        <section className="col-span-3 p-6">{children}</section>
       </section>
 
       {/* side menu for mobile version  */}
@@ -48,6 +49,10 @@ function DashBoardLayout({ children }) {
           </div>
         </div>
       )}
+      {/* footer section  */}
+      <section>
+        <FooterSection />
+      </section>
     </section>
   );
 }

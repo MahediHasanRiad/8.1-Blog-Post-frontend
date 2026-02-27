@@ -1,12 +1,12 @@
 import DashBoardLayout from '@/Layout/DashBoard-Layout'
 import React from 'react'
 
-function EditProfile() {
+function AddNewArticle() {
   return (
     <DashBoardLayout>
-      <h1>edit profile section</h1>
+      <h1>add new article</h1>
     </DashBoardLayout>
   )
 }
 
-export default EditProfile
+export default AddNewArticle
