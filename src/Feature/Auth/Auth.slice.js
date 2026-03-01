@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { registerAsyncThunk } from "./register.asychThunk";
 import { loginAsyncThunk } from "./login.asyncThunk";
+import { updateUserAsyncThunk } from "../Dashboard/redux/update-user-Info.asyncThunk";
 
 const initialState = {
   user: null,
   token: null,
   loading: false,
   error: null,
-
 };
 
 const authSlice = createSlice({
@@ -15,9 +15,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.user = null,
-      state.token = null
-    }
+      ((state.user = null), (state.token = null));
+    },
   },
   extraReducers: (builder) => {
     // register
@@ -49,6 +48,24 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
+
+    // update profile
+    builder
+    .addCase(updateUserAsyncThunk.pending, (state) => {
+      state.loading = true
+    })
+    .addCase(updateUserAsyncThunk.fulfilled, (state, action) => {
+      state.loading = false
+      
+      state.user = {
+        ...state.user,
+        ...action.payload.data
+      }
+    })
+    .addCase(updateUserAsyncThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    })
   },
 });
 

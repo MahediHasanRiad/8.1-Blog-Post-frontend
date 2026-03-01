@@ -20,8 +20,6 @@ function MainLayout({ children }) {
   // all menu items
   const menuLinks = [
     { path: '', Icon: House, text: "Home" },
-    { path: 'dashboard', Icon: LayoutDashboard, text: "Dashboard" },
-    { path: 'profile', Icon: Users, text: "Profile" },
     { path: 'stories',Icon: BookText, text: "Stories" },
     { path: 'stats', Icon: ChartNoAxesColumnIncreasing, text: "Stats" },
   ];

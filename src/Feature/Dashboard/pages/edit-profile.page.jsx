@@ -1,57 +1,85 @@
 import DashBoardLayout from "@/Layout/DashBoard-Layout";
 import ButtonField from "@/Shared/Components/button";
 import InputField from "@/Shared/Components/input";
-import React, { useState } from "react";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserAsyncThunk } from "../redux/update-user-Info.asyncThunk";
 
 function EditProfile() {
-  const [name, setName] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [profile, setProfile] = useState("");
-  const [coverImage, setCoverImage] = useState("");
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      name: "",
+      mobile: "",
+      avatar: "",
+      coverImage: "",
+    },
+  });
 
-  const updateProfile = () => {};
+  const { loading, error } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const updateProfile = async (data) => {
+    try {
+      await dispatch(updateUserAsyncThunk(data))
+        .unwrap()
+        reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <DashBoardLayout>
       <section className="grid md:grid-cols-2 gap-4">
-        <InputField
-          labelText={"Email"}
-          placeholder={"riad@gmail.com"}
-          setInputValue={''}
-          value={''}
-          readOnly = {true}
-          className={'border-gray-300'}
-        />
-        <InputField
-          labelText={"Name"}
-          placeholder={"Enter your name..."}
-          setInputValue={setName}
-          value={name}
-        />
-        <InputField
-          labelText={"Mobile"}
-          placeholder={"Enter your mobile number..."}
-          setInputValue={setMobile}
-          value={mobile}
-        />
-        <InputField
-          labelText={"Profile Image"}
-          type="file"
-          value={profile}
-          setInputValue={setProfile}
-        />
-        <InputField
-          labelText={"Cover Image"}
-          type="file"
-          value={coverImage}
-          setInputValue={setCoverImage}
-        />
+        <form onSubmit={handleSubmit(updateProfile)}>
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => <InputField labelText={"Name"} {...field} />}
+          />
+          <Controller
+            name="mobile"
+            control={control}
+            render={({ field }) => (
+              <InputField labelText={"Mobile"} {...field} />
+            )}
+          />
+          <Controller
+            name="avatar"
+            control={control}
+            render={({ field: { onChange, ref } }) => (
+              <InputField
+                type="file"
+                labelText={"Profile Image"}
+                onChange={(e) => onChange(e.target.files[0])}
+                ref={ref}
+              />
+            )}
+          />
+          <Controller
+            name="coverImage"
+            control={control}
+            render={({ field: { onChange, ref } }) => (
+              <InputField
+                type="file"
+                labelText={"Cover Image"}
+                onChange={(e) => onChange(e.target.files[0])}
+                ref={ref}
+              />
+            )}
+          />
+          {error && <p className="text-red-400">{error}</p>}
+          {/* save button  */}
+          <section className="float-right">
+            {loading ? (
+              <ButtonField text="Loading..." />
+            ) : (
+              <ButtonField text="Save" />
+            )}
+          </section>
+        </form>
       </section>
-      {/* save button  */}
-        <section className="float-right">
-          <ButtonField text="Save" />
-        </section>
-
     </DashBoardLayout>
   );
 }
