@@ -2,7 +2,10 @@ import ButtonField from "@/Shared/Components/button";
 import InputField from "@/Shared/Components/input";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { registerAsyncThunk } from "../register.asychThunk";
+
 
 function Register() {
   const {
@@ -14,6 +17,8 @@ function Register() {
     defaultValues: {
       name: "",
       email: "",
+      avatar: "",
+      coverImage: "",
       password: "",
       mobile: "",
       role: "",
@@ -21,9 +26,31 @@ function Register() {
     },
   });
 
+  const { loading, error } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const onSub = (data) => {
-    console.log(data);
-    reset();
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("avatar", data.avatar);
+      formData.append("coverImage", data.coverImage);
+      formData.append("password", data.password);
+      formData.append("mobile", data.mobile);
+      formData.append("role", data.role ? data.role : "USER");
+      formData.append("status", data.status ? data.status : "Pending");
+
+      dispatch(registerAsyncThunk(formData))
+        .unwrap()
+        .then(() => {
+          reset();
+          navigate("/");
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -66,6 +93,39 @@ function Register() {
           />
           {errors.email && <p className="text-red-400">Email are required !</p>}
           <Controller
+            name="avatar"
+            control={control}
+            rules={{
+              required: "Profile Image are required !!!",
+            }}
+            // we should distructure {field}, file doesnot have value,
+            // and we should  modify onChange
+            render={({ field: { onChange, ref } }) => (
+              <InputField
+                labelText={"Profile Image"}
+                type="file"
+                ref={ref}
+                onChange={(e) => onChange(e.target.files[0])}
+                error={errors.avatar?.message}
+              />
+            )}
+          />
+          {errors.avatar && (
+            <p className="text-red-400">Profile Image are required !</p>
+          )}
+          <Controller
+            name="coverImage"
+            control={control}
+            render={({ field: { onChange, ref } }) => (
+              <InputField
+                labelText={"Cover Image"}
+                type="file"
+                ref={ref}
+                onChange={(e) => onChange(e.target.files[0])}
+              />
+            )}
+          />
+          <Controller
             name="password"
             control={control}
             rules={{
@@ -87,13 +147,14 @@ function Register() {
               required: "Mobile No. Required !!!",
               pattern: {
                 value: /^(?:\+88|88)?(01[3-9]\d{8})$/,
-                message: "Invalid mobile number...",
+                message: "Invalid mobile number... must add 88 before number",
               },
             }}
             render={({ field }) => (
               <InputField
                 labelText={"Mobile No."}
-                placeholder={"015*********"}
+                placeholder={"88015*********"}
+                value={88}
                 {...field}
               />
             )}
@@ -101,12 +162,21 @@ function Register() {
           {errors.password && (
             <p className="text-red-400">Mobile No Required</p>
           )}
-          
 
-          <ButtonField text="Register" className="w-full" />
+          {loading ? (
+            <ButtonField text="Loading..." className="w-full" />
+          ) : (
+            <ButtonField text="Register" className="w-full" />
+          )}
+          {error && <p className="text-red-400">{error}</p>}
 
           {/* login  */}
-          <p className="text-gray-400 text-sm text-center">already registered ? <Link className="text-secondary-0" to={'/login'}>log-in</Link></p>
+          <p className="text-gray-400 text-sm text-center">
+            already registered ?{" "}
+            <Link className="text-secondary-0" to={"/login"}>
+              log-in
+            </Link>
+          </p>
         </form>
       </section>
     </section>

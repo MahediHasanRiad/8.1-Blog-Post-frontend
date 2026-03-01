@@ -6,8 +6,8 @@ import EditProfile from "@/Feature/Dashboard/pages/edit-profile.page";
 import Profile from "@/Feature/User/Pages/profile.page";
 import { Routes, Route } from "react-router";
 import Test from "./test";
-import Register from "@/Feature/User/Pages/register.page";
-import LogIn from "@/Feature/User/Pages/login.page";
+import Register from "@/Feature/Auth/Pages/register.page";
+import LogIn from "@/Feature/Auth/Pages/login.page";
 
 function App() {
   return (

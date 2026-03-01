@@ -1,8 +1,10 @@
 import ButtonField from "@/Shared/Components/button";
 import InputField from "@/Shared/Components/input";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Link } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router";
+import { loginAsyncThunk } from "../login.asyncThunk";
 
 function LogIn() {
   const {
@@ -17,10 +19,21 @@ function LogIn() {
     },
   });
 
+  const { loading, error, user, token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
   const onSub = (data) => {
-    console.log(data);
+    dispatch(loginAsyncThunk(data))
     reset();
   };
+
+  // navigate in home page 
+  useEffect(() => {
+    if(user && token){
+      navigate('/')
+    }
+  }, [user, token, navigate])
 
   return (
     <section className="w-1/4 flex min-h-screen mx-auto items-center">
@@ -62,7 +75,13 @@ function LogIn() {
           />
           {errors.password && <p className="text-red-400">Password Required</p>}
 
-          <ButtonField text="Login" className="w-full" />
+          {loading ? (
+            <ButtonField text="Loading..." className="w-full" />
+          ) : (
+            <ButtonField text="Login" className="w-full" />
+          )}
+          {/* error message  */}
+          {error && <p className="text-red-400">{error}</p>}
 
           {/* login  */}
           <p className="text-gray-400 text-sm text-center">
