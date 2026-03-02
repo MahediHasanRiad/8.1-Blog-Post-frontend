@@ -1,5 +1,5 @@
 import Articles from "@/Feature/Article/Pages/article.page";
-import SingleArticle from "@/Feature/Article/Pages/single-article.page";
+import SingleArticlePage from "@/Feature/Article/Pages/single-article.page";
 import AddNewArticle from "@/Feature/Dashboard/pages/add-article.page";
 import ChangePassword from "@/Feature/Dashboard/pages/change-password.page";
 import EditProfile from "@/Feature/Dashboard/pages/edit-profile.page";
@@ -40,7 +40,7 @@ function App() {
         {/* <Route path="/test" element={<Test />} /> */}
         <Route path="/" element={<Articles />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/articles/single" element={<SingleArticle />} />
+        <Route path="/article/:id" element={<SingleArticlePage />} />
         <Route path="/dashboard" element={<EditProfile />} />
         <Route path="/changePassword" element={<ChangePassword />} />
         <Route path="/newArticle" element={<AddNewArticle />} />

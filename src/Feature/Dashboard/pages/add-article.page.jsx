@@ -23,7 +23,7 @@ function AddNewArticle() {
   });
 
 
-  const { loading } = useSelector((state) => state.article);
+  const { isLoading } = useSelector((state) => state.article);
   const dispatch = useDispatch();
 
   const onSubmitData = async (data) => {
@@ -89,7 +89,7 @@ function AddNewArticle() {
             render={({ field }) => <ArticleBody {...field} />}
           />
 
-          {loading ? (
+          {isLoading ? (
             <ButtonField text="Loading..." className="float-right mt-6" />
           ) : (
             <ButtonField text="Publish" className="float-right mt-6" />
