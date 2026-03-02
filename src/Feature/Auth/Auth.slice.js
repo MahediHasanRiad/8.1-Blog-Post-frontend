@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { registerAsyncThunk } from "./register.asychThunk";
 import { loginAsyncThunk } from "./login.asyncThunk";
 import { updateUserAsyncThunk } from "../Dashboard/redux/update-user-Info.asyncThunk";
+import { changePasswordAsyncThunk } from "../Dashboard/redux/changePassword.asyncThunk";
 
 const initialState = {
   user: null,
@@ -26,6 +27,7 @@ const authSlice = createSlice({
       })
       .addCase(registerAsyncThunk.fulfilled, (state, action) => {
         state.loading = false;
+        state.error = null;
         state.user = action.payload;
       })
       .addCase(registerAsyncThunk.rejected, (state, action) => {
@@ -41,6 +43,7 @@ const authSlice = createSlice({
       .addCase(loginAsyncThunk.fulfilled, (state, action) => {
         const { accessToken, loginUser } = action.payload.data;
         state.loading = false;
+        state.error = null;
         state.user = loginUser;
         state.token = accessToken;
       })
@@ -51,21 +54,36 @@ const authSlice = createSlice({
 
     // update profile
     builder
-    .addCase(updateUserAsyncThunk.pending, (state) => {
-      state.loading = true
-    })
-    .addCase(updateUserAsyncThunk.fulfilled, (state, action) => {
-      state.loading = false
-      
-      state.user = {
-        ...state.user,
-        ...action.payload.data
-      }
-    })
-    .addCase(updateUserAsyncThunk.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error;
-    })
+      .addCase(updateUserAsyncThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUserAsyncThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+
+        state.user = {
+          ...state.user,
+          ...action.payload.data,
+        };
+      })
+      .addCase(updateUserAsyncThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+      });
+    
+    // reset password
+    builder
+      .addCase(changePasswordAsyncThunk.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(changePasswordAsyncThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null
+      })
+      .addCase(changePasswordAsyncThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 

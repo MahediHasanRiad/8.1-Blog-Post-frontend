@@ -4,10 +4,15 @@ import Menu from "../Components/Profile/menu";
 import ArticleCard from "@/Shared/Components/article-card";
 import Info from "../Components/Profile/info";
 import MainLayout from "@/Layout/Main-Layout";
+import ContactInfo from "../Components/Profile/contact";
+import { useSelector } from "react-redux";
 
 function Profile() {
   const [article, setArticle] = useState(true);
   const [about, setAbout] = useState(false);
+  const [contact, setContact] = useState(false);
+
+  const {user} = useSelector((state) => state.auth)
 
   return (
     <MainLayout>
@@ -17,6 +22,8 @@ function Profile() {
         setArticle={setArticle}
         about={about}
         setAbout={setAbout}
+        contact={contact}
+        setContact={setContact}
       />
       {/* show articles  */}
       {article && (
@@ -32,6 +39,9 @@ function Profile() {
 
       {/* show about section  */}
       {about && <Info />}
+
+      {/* show contact info  */}
+      {contact && <ContactInfo info = {user} />}
     </MainLayout>
   );
 }
