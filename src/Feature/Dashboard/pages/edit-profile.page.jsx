@@ -5,6 +5,7 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserAsyncThunk } from "../redux/update-user-Info.asyncThunk";
+import ArticleBody from "../components/tinyMCE.editor";
 
 function EditProfile() {
   const { control, handleSubmit, reset } = useForm({
@@ -13,6 +14,7 @@ function EditProfile() {
       mobile: "",
       avatar: "",
       coverImage: "",
+      bio: ""
     },
   });
 
@@ -66,6 +68,16 @@ function EditProfile() {
                 labelText={"Cover Image"}
                 onChange={(e) => onChange(e.target.files[0])}
                 ref={ref}
+              />
+            )}
+          />
+          {error && <p className="text-red-400">{error}</p>}
+          <Controller
+            name="bio"
+            control={control}
+            render={({ field }) => (
+              <ArticleBody
+                {...field}
               />
             )}
           />

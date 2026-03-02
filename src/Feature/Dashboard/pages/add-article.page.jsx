@@ -1,6 +1,6 @@
 import DashBoardLayout from "@/Layout/DashBoard-Layout";
 import React from "react";
-import ArticleBody from "../components/article-body";
+import ArticleBody from "../components/tinyMCE.editor";
 import InputField from "@/Shared/Components/input";
 import { useForm, Controller } from "react-hook-form";
 import ButtonField from "@/Shared/Components/button";

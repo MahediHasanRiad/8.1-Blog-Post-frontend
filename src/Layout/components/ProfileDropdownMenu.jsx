@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { logoutAsyncthuck } from "@/Feature/Auth/logout.asyncThuck";
 import { UserRoundPen, LayoutDashboard, LogOutIcon } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { Link, NavLink } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router";
 
 function ProfileDropdownMenu() {
 
   const dispatch = useDispatch()
-
+  const {user} = useSelector((state) => state.auth)
 
   return (
     <DropdownMenu>
@@ -31,7 +31,7 @@ function ProfileDropdownMenu() {
       <DropdownMenuContent align="end">
         <DropdownMenuGroup>
           <NavLink
-            to={"/profile"}
+            to={`/profile/${user?._id}`}
             className={({ isActive }) =>
               isActive ? "text-primary-0" : "text-black"
             }

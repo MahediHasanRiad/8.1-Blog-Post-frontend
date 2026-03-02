@@ -4,6 +4,7 @@ import { Link, } from "react-router";
 function ArticleCard({
   path = "/",
   id,
+  authorId,
   authorImage,
   authorName,
   title,
@@ -31,9 +32,9 @@ function ArticleCard({
           />
         )}
         {authorName && (
-          <span className="ml-2 text-xs font-medium text-text-0">
+          <Link to={`/profile/${authorId}`} className="ml-2 text-xs font-medium text-text-0">
             {authorName}
-          </span>
+          </Link>
         )}
       </div>
 

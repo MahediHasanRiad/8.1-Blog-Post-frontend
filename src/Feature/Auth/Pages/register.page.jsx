@@ -21,6 +21,7 @@ function Register() {
       coverImage: "",
       password: "",
       mobile: "",
+      bio: "",
       role: "",
       status: "",
     },
@@ -39,6 +40,7 @@ function Register() {
       formData.append("coverImage", data.coverImage);
       formData.append("password", data.password);
       formData.append("mobile", data.mobile);
+      formData.append("bio", data.bio);
       formData.append("role", data.role ? data.role : "USER");
       formData.append("status", data.status ? data.status : "Pending");
 
@@ -154,7 +156,17 @@ function Register() {
               <InputField
                 labelText={"Mobile No."}
                 placeholder={"88015*********"}
-                value={88}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="bio"
+            control={control}
+            render={({ field }) => (
+              <InputField
+                labelText={"Bio."}
+                placeholder={"about me..."}
                 {...field}
               />
             )}

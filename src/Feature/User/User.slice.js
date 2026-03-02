@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getUserAsychThunk } from "./redux/getUser.asyncThunk";
+import { viewProfileAsyncThunk } from "./redux/profile.asyncThunk";
 
 const initialState = {
   user: null,
@@ -25,5 +26,24 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.isError = action.payload;
       });
+
+    // get user profile
+    builder
+      .addCase(viewProfileAsyncThunk.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(viewProfileAsyncThunk.fulfilled, (state, action) => {
+        state.isError = null;
+        state.isLoading = false;
+
+        state.user = action.payload.data;
+      })
+      .addCase(viewProfileAsyncThunk.rejected, (state, action) => {
+        state.isError = null;
+        state.isLoading = false;
+      });
   },
 });
+
+export const {} = userSlice.actions
+export default userSlice.reducer

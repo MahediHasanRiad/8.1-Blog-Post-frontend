@@ -1,9 +1,10 @@
 import MainLayout from "@/Layout/Main-Layout";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { singleArticleAsychThunk } from "../singleArticle.asyncThunk";
 import DOMPurify from "dompurify";
+
 
 function SingleArticlePage() {
   const { id } = useParams();
@@ -30,9 +31,11 @@ function SingleArticlePage() {
           alt=""
           className="w-8 h-8 rounded-full object-cover"
         />
-        <span className="text-sm text-text-0">
+        <Link to={`/profile/${singleArticle?.author?._id}`}
+          className="text-sm text-text-0 hover:underline hover:text-secondary-0 cursor-pointer"
+        >
           {singleArticle?.author?.name}
-        </span>
+        </Link>
       </div>
       {/* article image  */}
       <img
@@ -42,7 +45,7 @@ function SingleArticlePage() {
       />
       {/* article description  */}
       <span
-      // {dangerouslySetInnerHTML} => to remove html tag from body 
+        // {dangerouslySetInnerHTML} => to remove html tag from body
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(singleArticle?.body),
         }}

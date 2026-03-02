@@ -1,22 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileImages from "../Components/Profile/profile-images";
 import Menu from "../Components/Profile/menu";
 import ArticleCard from "@/Shared/Components/article-card";
 import Info from "../Components/Profile/info";
 import MainLayout from "@/Layout/Main-Layout";
 import ContactInfo from "../Components/Profile/contact";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { viewProfileAsyncThunk } from "../redux/profile.asyncThunk";
 
 function Profile() {
   const [article, setArticle] = useState(true);
   const [about, setAbout] = useState(false);
   const [contact, setContact] = useState(false);
 
-  const {user} = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { id } = useParams();
 
+  useEffect(() => {
+    dispatch(viewProfileAsyncThunk(id));
+  }, [id]);
+console.log('profile', user)
   return (
     <MainLayout>
-      <ProfileImages />
+      <ProfileImages profile={user?.avatar} coverImage={user?.coverImage} />
       <Menu
         article={article}
         setArticle={setArticle}
@@ -38,10 +46,10 @@ function Profile() {
       )}
 
       {/* show about section  */}
-      {about && <Info />}
+      {about && <Info bio={user.bio} />}
 
       {/* show contact info  */}
-      {contact && <ContactInfo info = {user} />}
+      {contact && <ContactInfo info={user} />}
     </MainLayout>
   );
 }

@@ -34,6 +34,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.user = action.payload;
+        console.log(action.payload.data)
       })
       .addCase(registerAsyncThunk.rejected, (state, action) => {
         state.loading = false;

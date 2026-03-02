@@ -24,9 +24,11 @@ function Articles() {
           className={"rounded-3xl w-1/2"}
         />
         {articles.article?.map((item) => (
+          // console.log('aus', item.author._id)
           <ArticleCard
             key={item._id}
             id={item._id}
+            authorId={item.author._id}
             authorImage={item.author.avatar}
             authorName={item.author.name}
             title={item.title}
