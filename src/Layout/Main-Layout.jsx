@@ -61,7 +61,7 @@ function MainLayout({ children }) {
 
           {/* Sidebar */}
           <div className="relative w-64 h-full bg-white shadow-lg">
-            <LeftSideMenu />
+            <LeftSideMenu menuLinks={menuLinks} />
           </div>
         </div>
       )}

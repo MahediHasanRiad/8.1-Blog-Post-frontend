@@ -4,6 +4,7 @@ import ArticleCard from "../../../Shared/Components/article-card";
 import MainLayout from "@/Layout/Main-Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { allArticleAsyncThunk } from "../allArticle.asyncThunk";
+import PaginationForm from "@/Shared/Components/pagination";
 
 function Articles() {
   const { articles, isLoading, isError } = useSelector(
@@ -14,7 +15,7 @@ function Articles() {
   useEffect(() => {
     dispatch(allArticleAsyncThunk())
   }, [])
-
+console.log('articles', articles)
   return (
     <MainLayout className="">
       {/* articles  */}
@@ -36,6 +37,11 @@ function Articles() {
             articleImage={item.coverImage}
           />
         ))}
+
+        {/* pagination  */}
+        <section className="w-full my-4 mx-auto">
+          <PaginationForm />
+        </section>
       </section>
     </MainLayout>
   );
