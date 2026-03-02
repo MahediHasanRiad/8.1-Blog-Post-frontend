@@ -8,10 +8,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { logoutAsyncthuck } from "@/Feature/Auth/logout.asyncThuck";
 import { UserRoundPen, LayoutDashboard, LogOutIcon } from "lucide-react";
-import { NavLink } from "react-router";
+import { useDispatch } from "react-redux";
+import { Link, NavLink } from "react-router";
 
 function ProfileDropdownMenu() {
+
+  const dispatch = useDispatch()
+
+  // const signOut = () => {
+  //   dispatch(logoutAsyncthuck())
+  // }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -48,10 +57,18 @@ function ProfileDropdownMenu() {
           </NavLink>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOutIcon />
-          Sign Out
-        </DropdownMenuItem>
+        <NavLink
+          to={"/"}
+          onClick={() => dispatch(logoutAsyncthuck())}
+          className={({ isActive }) =>
+            isActive ? "text-primary-0" : "text-black"
+          }
+        >
+          <DropdownMenuItem>
+            <LogOutIcon />
+            Sign Out
+          </DropdownMenuItem>
+        </NavLink>
       </DropdownMenuContent>
     </DropdownMenu>
   );

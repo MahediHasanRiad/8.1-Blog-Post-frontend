@@ -8,12 +8,31 @@ import { Routes, Route } from "react-router";
 import Test from "./test";
 import Register from "@/Feature/Auth/Pages/register.page";
 import LogIn from "@/Feature/Auth/Pages/login.page";
+import { useEffect } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser, logout } from "../Feature/Auth/Auth.slice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  // check user login or not
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get("/api/v1/user/me", {
+          withCredentials: true,
+        });
+        dispatch(setUser(response.data.data));
+      } catch (error) {
+        dispatch(logout());
+      }
+    })();
+  }, []);
+
   return (
     <>
       <Routes>
-
         {/* auth  */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LogIn />} />

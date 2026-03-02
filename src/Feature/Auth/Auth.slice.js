@@ -3,6 +3,7 @@ import { registerAsyncThunk } from "./register.asychThunk";
 import { loginAsyncThunk } from "./login.asyncThunk";
 import { updateUserAsyncThunk } from "../Dashboard/redux/update-user-Info.asyncThunk";
 import { changePasswordAsyncThunk } from "../Dashboard/redux/changePassword.asyncThunk";
+import { logoutAsyncthuck } from "./logout.asyncThuck";
 
 const initialState = {
   user: null,
@@ -16,7 +17,11 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      ((state.user = null), (state.token = null));
+      state.user = null;
+      state.token = null;
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -52,6 +57,21 @@ const authSlice = createSlice({
         state.error = action.payload;
       });
 
+    // logout
+    builder
+      .addCase(logoutAsyncthuck.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(logoutAsyncthuck.fulfilled, (state) => {
+        state.user = null;
+        state.error = null;
+        state.loading = false;
+      })
+      .addCase(logoutAsyncthuck.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+
     // update profile
     builder
       .addCase(updateUserAsyncThunk.pending, (state) => {
@@ -70,22 +90,22 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.error;
       });
-    
+
     // reset password
     builder
       .addCase(changePasswordAsyncThunk.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(changePasswordAsyncThunk.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null
+        state.error = null;
       })
       .addCase(changePasswordAsyncThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
+      });
   },
 });
 
-export const {} = authSlice.actions;
+export const { logout, setUser } = authSlice.actions;
 export default authSlice.reducer;

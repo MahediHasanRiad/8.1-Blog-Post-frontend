@@ -4,8 +4,6 @@ import LeftSideMenu from "./components/menu";
 import FooterSection from "./components/footer";
 import {
   House,
-  LayoutDashboard,
-  Users,
   BookText,
   ChartNoAxesColumnIncreasing,
 } from "lucide-react";
