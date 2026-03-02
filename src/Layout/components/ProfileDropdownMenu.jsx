@@ -17,9 +17,6 @@ function ProfileDropdownMenu() {
 
   const dispatch = useDispatch()
 
-  // const signOut = () => {
-  //   dispatch(logoutAsyncthuck())
-  // }
 
   return (
     <DropdownMenu>

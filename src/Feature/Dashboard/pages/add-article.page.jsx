@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import ButtonField from "@/Shared/Components/button";
 import { useDispatch, useSelector } from "react-redux";
 import { addArticleAsyncThunk } from "../redux/add-article.asyncThunk";
-import { toast } from "sonner";
+
 
 function AddNewArticle() {
   const {
@@ -22,8 +22,8 @@ function AddNewArticle() {
     },
   });
 
-  const { user } = useSelector((state) => state.auth);
-  const { loading, error } = useSelector((state) => state.article);
+
+  const { loading } = useSelector((state) => state.article);
   const dispatch = useDispatch();
 
   const onSubmitData = async (data) => {
@@ -32,15 +32,13 @@ function AddNewArticle() {
 
     formData.append("title", data.title);
     formData.append("body", data.body);
-    formData.append("coverImage", data.coverImage); // file
+    formData.append("coverImage", data.coverImage); 
 
     await dispatch(addArticleAsyncThunk(formData)).unwrap();
-
-    toast.success("Successfully created!!!");
     reset();
 
   } catch (e) {
-    toast.error(e);
+    console.log(e)
   }
 };
 
@@ -69,12 +67,12 @@ function AddNewArticle() {
             rules={{
               required: "CoverImage are required !",
             }}
-            render={({ field }) => (
+            render={({ field: {onChange, ref} }) => (
               <InputField
                 type="file"
-                onChange={(e) => e.target.files[0]}
+                ref={ref}
+                onChange={(e) => onChange(e.target.files[0])}
                 labelText={"Cover Image"}
-                {...field}
               />
             )}
           />

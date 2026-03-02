@@ -11,7 +11,7 @@ function ArticleBody({value, onChange}) {
         onInit={(_evt, editor) => (editorRef.current = editor)}
         value={value}
         onEditorChange={(content) => onChange(content)}
-        initialValue="<p></p>"
+        initialValue=""
         init={{
           height: 500,
           menubar: false,

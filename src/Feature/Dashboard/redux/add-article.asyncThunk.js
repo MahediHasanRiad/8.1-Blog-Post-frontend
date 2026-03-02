@@ -8,7 +8,7 @@ export const addArticleAsyncThunk = createAsyncThunk(
       const response = await axios.post("/api/v1/article", formData, {
         withCredentials: true,
       });
-      return response.data
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }

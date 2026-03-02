@@ -2,9 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addArticleAsyncThunk } from "./add-article.asyncThunk";
 
 const initialState = {
-  title: null,
-  coverImage: null,
-  body: null,
+  article: null,
+  links: null,
   loading: false,
   error: null,
 };
@@ -19,7 +18,11 @@ const articleSlice = createSlice({
         state.loading = true;
       })
       .addCase(addArticleAsyncThunk.fulfilled, (state, action) => {
-        console.log('p', action.payload)
+        state.loading = false;
+        state.error = null;
+
+        state.article = action.payload.data.article;
+        state.links = action.payload.data.links;
       })
       .addCase(addArticleAsyncThunk.rejected, (state, action) => {
         state.loading = false;
